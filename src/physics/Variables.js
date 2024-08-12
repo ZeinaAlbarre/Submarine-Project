@@ -1,5 +1,5 @@
 export default class Variables{
-    constructor(Ve , m , r, Pe, Aw , alpha , beta, l){
+    constructor(Ve , m , r, Pe, Aw , alpha , beta, l , Velocity_ang ,angle){
         this.Ve = Ve;
         this.m = m;
         this.r = r;
@@ -9,6 +9,8 @@ export default class Variables{
         this.beta = beta; //Vertical
         this.l = l;
         this.initialize();
+        this.Velocity_ang = Velocity_ang;
+        this.angle = angle; 
     };
     g = 9.8; //gravitation acceleration
     p = 1000; //water density
