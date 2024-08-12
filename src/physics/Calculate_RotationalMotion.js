@@ -33,7 +33,7 @@ export default class Calculate_RotationalMotion{
     this.pre_angle = this.variables.angle;
   }
 
-
+  // ac = l*fl / i delta
   caculate_Angulare_Acc(){
     const anac_v1 = new vector(0, 0, 0);
     const anac_v2 = new vector(0, 0, 0);
