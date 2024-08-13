@@ -5,44 +5,49 @@ import Lift from './Lift';
 import Variables from "./Variables";
 import Engine from "./Engine";
 import Weight from './Weight.js';
+import Retrograde from './Retrograde.js';
 
 
 
 // Variables
 const variables = new Variables(
-    20, //Ve Velocity of fan
-    3000, //mass
+    0, //Ve Velocity of fan
+    30000, //mass
+    0, //water mass
     4, //radius
     500, //Pe power of engine
     6, //Aw Area of flipper
     0, //alpha (Horizontal angle)
     0, //beta (Vertical angle)
-    1000 //length
+    1000, //length
+    new THREE.Vector3()
 );
 
-let velocity = new THREE.Vector3(0, 0, 1);
 let coordinate = new THREE.Vector3(0, 0, 0);
 let thetaH = new THREE.Vector3(0, variables.alpha, variables.alpha);
 let thetaV = new THREE.Vector3(0, variables.beta, 0);
 let t = 1;
 
+const retrograde = new Retrograde(variables, coordinate, variables.prevVelocity, variables.alpha, 1);
+
+variables.prevVelocity = retrograde.calcVelocity();
 
 
 const liftH = new Lift(
     variables, //variables
-    velocity, //velocity
+    variables.prevVelocity, //velocity
     thetaH
 );
 
 const liftV = new Lift(
     variables, //variables
-    velocity, //velocity
+    variables.prevVelocity, //velocity
     thetaV
 );
 
 const drag = new Drag(
     variables,
-    velocity
+    variables.prevVelocity
 );
 
 
@@ -91,25 +96,32 @@ window.addEventListener(
               console.log('updated BETA', variables.beta);
               break;
 
-          case "W" || "w": // W
-              variables.Ve += 0.1;
-              engine.updateFe();
-              console.log("updated VE", engine.variable.Ve);
-              break;
-          case "S" || "s": // W
-              variables.Ve -= 0.1;
-              engine.updateFe();
-              console.log("updated VE", engine.variable.Ve);
-              break;
+              case "W" || "w": // W
+              variables.Ve += 10;
+                  engine.updateFe();
+                  console.log("updated VE", engine.variable.Ve);
+                  break;
+              case "S" || "s": // W
+                  if (variables.Ve - 10 >= 0) {
+                      variables.Ve -= 10;
+                  }
+                  engine.updateFe();
+                  console.log("updated VE", engine.variable.Ve);
+                  break;
           case "A" || "a": // A
-              variables.m += 1000;
+              variables.wm += 1000;
               weight.updateFw();
-              console.log("updated M", variables.m);
+              console.log("updated weight", weight.Fw);
+              console.log("updated M", variables.wm);
               break;
           case "D" || "d": // A
-              variables.m -= 1000;
-              weight.updateFw();
-              console.log("updated M", variables.m);
+          if(variables.wm - 1000 >= 0){
+              variables.wm -= 1000;
+            weight.updateFw();
+
+            }
+              console.log("updated weight", weight.Fw);
+              console.log("updated M", variables.wm);
               break;
           case "Enter":
               // Do something for "enter" or "return" key press.
@@ -137,14 +149,14 @@ window.addEventListener(
     //console.log(liftH, liftV);
     
     let position = new THREE.Vector3(0, 0, 0);
-    const liftHForce = liftH.forceVector.multiplyScalar(0.000001);
-    const liftVForce = liftV.forceVector.multiplyScalar(0.000001);
-    const dragForce = drag.Fd;
+    const liftHForce = liftH.forceVector.normalize();
+    const liftVForce = liftV.forceVector.normalize();
+    const dragForce = drag.Fd.normalize();
     const weightForce = weight.Fw.multiplyScalar(0.000001);
     const buoyancyForce = buoyancy.Fb.multiplyScalar(0.000001);
-    const engineForce = engine.Fe.multiplyScalar(0.001);
-
-    //console.log(weightForce);
+    const engineForce = engine.Fe.normalize();
+    console.log(weight.Fw);
+    console.log(buoyancy.Fb);
 
     //console.log(liftHForce);
 
@@ -152,20 +164,23 @@ window.addEventListener(
     //position = position.addTo(submarinePosition,  engineForce);
     //position = 
     //position = position.add();
-    console.log(weightForce);
+    console.log(liftH.forceVector);
+    console.log(liftV.forceVector);
     //position = position.add(buoyancyForce);
     //position = position.add(liftHForce);
 
     /* position = position.addTo(liftVForce);
     position = position.addTo(dragForce); */
 
-    position.setX(submarinePosition.x + engineForce.x + weightForce.x);
-    position.setY(submarinePosition.y + engineForce.y + weightForce.y);
-    position.setZ(submarinePosition.z + engineForce.z + weightForce.z);
+    //engine.updateFe();
+    weight.updateFw();
+    position.setX(submarinePosition.x + (+1)*engineForce.x + weightForce.x + buoyancyForce.x + dragForce.x + liftHForce.x + liftVForce.x);
+    position.setY(submarinePosition.y + (+1)*engineForce.y + weightForce.y + buoyancyForce.y + dragForce.y + liftHForce.y + liftVForce.y);
+    position.setZ(submarinePosition.z + (-1)*engineForce.z + weightForce.z + buoyancyForce.z + dragForce.z + liftHForce.z + liftVForce.z);
     //position = position.addVectors(submarinePosition, engineForce);
-    //console.log(liftH);
+
 
     return position;
 }
 
-  export {simulate, liftH, liftV};
+  export {simulate};

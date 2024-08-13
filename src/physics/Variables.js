@@ -1,13 +1,16 @@
+import * as THREE from 'three';
 export default class Variables{
-    constructor(Ve , m , r, Pe, Aw , alpha , beta, l){
+    constructor(Ve , m , wm, r, Pe, Aw , alpha , beta, l, prevVelocity){
         this.Ve = Ve;
         this.m = m;
+        this.wm = wm;
         this.r = r;
         this.Pe = Pe;
         this.Aw = Aw ;
         this.alpha = alpha; //Horizontal
         this.beta = beta; //Vertical
         this.l = l;
+        this.prevVelocity = prevVelocity;
         this.initialize();
     };
     g = 9.8; //gravitation acceleration

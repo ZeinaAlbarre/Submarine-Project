@@ -18,7 +18,6 @@ const mixers = [];
 let mixer,mixer1,mixer2,mixer4,mixer5,mixer6,mixer7,mixer8;
 let submarine; 
 let submarinePosition = new THREE.Vector3(100, -50, 8500);
-
 let submarineLoaded = false;
 const entityManager1 = new YUKA.EntityManager();
 const entityManager = new YUKA.EntityManager();
@@ -136,6 +135,7 @@ controls.update();
   const loader = new GLTFLoader();
 
   
+
 loader.load('model/submarine.glb', function (glb) {
   submarine = glb.scene;
   scene.add(submarine);
@@ -151,7 +151,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarine.add(camera);
   camera.position.set(-9, 90, 300); 
 
-  const submarineFolder = gui.addFolder('Submarine Position');/* 
+  const submarineFolder = gui.addFolder('Submarine Position');
   submarineFolder.add(submarine.position, 'x', -1000, 1000).name('Move X');
   submarineFolder.add(submarine.position, 'y', -1000, 1000).name('Move Y');
   submarineFolder.add(submarine.position, 'z', -1000, 10000).name('Move Z');
@@ -159,7 +159,7 @@ loader.load('model/submarine.glb', function (glb) {
   // Submarine rotation controls
   submarineFolder.add(submarine.rotation, 'x', 0, Math.PI * 2).name('Rotate X');
   submarineFolder.add(submarine.rotation, 'y', 0, Math.PI * 2).name('Rotate Y');
-  submarineFolder.add(submarine.rotation, 'z', 0, Math.PI * 2).name('Rotate Z'); */
+  submarineFolder.add(submarine.rotation, 'z', 0, Math.PI * 2).name('Rotate Z');
   submarineFolder.open();
   submarineLoaded = true;
 });
@@ -656,10 +656,10 @@ loader.load('model/fish/turtle.glb', function(glb) {
   requestAnimationFrame(update);
   
   
-  const geometry = new THREE.SphereGeometry( 0.55, 32, 16 ); 
+  const geometry = new THREE.SphereGeometry( 0.2, 32, 16 ); 
   const material = new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load('textures/hh.jpg'),side:THREE.DoubleSide});
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.set(0,-5600,0);
+  mesh.position.set(0,-5200,0);
   mesh.scale.set(10000,10000,10000);
   scene.add( mesh );
 
@@ -683,11 +683,11 @@ function onKeyDown(event) {
   switch (event.keyCode) {
     /* case 87: // W
       moveForward = true;
-      break; */
-    /* case 65: // A
+      break;
+    case 65: // A
       moveLeft = true;
-      break; */
-    /* case 83: // S
+      break;
+    case 83: // S
       moveBackward = true;
       break;
     case 68: // D
@@ -716,16 +716,16 @@ function onKeyDown(event) {
 
 function onKeyUp(event) {
   switch (event.keyCode) {
-    case 87: // W
+    /* case 87: // W
       moveForward = false;
       break;
-    /* case 65: // A
+    case 65: // A
       moveLeft = false;
-      break; */
-   /*  case 83: // S
+      break;
+    case 83: // S
       moveBackward = false;
-      break; */
-    /* case 68: // D
+      break;
+    case 68: // D
       moveRight = false;
       break; */
       case 81: // Q
@@ -741,16 +741,14 @@ function onKeyUp(event) {
       rotateDown = false;
       break;
   }
-}
-
+}0
 function moveToSphere() {
   isUnder=true;
-  submarinePosition = new THREE.Vector3(0, -5500, -8000);
+  submarinePosition = new THREE.Vector3(0, -5500, -1100);
   submarine.position.copy(submarinePosition);
- camera.position.set(-5, 100, 350); 
+  //submarine.position.set(0, -5200, 1100);
+  camera.position.set(-5, 100, 350); 
   controls.target.set(0, -5200, 0); 
-  //submarine.scale(0.000005,0.000005,0.000005);
-
   controls.update();
 }
 
@@ -812,12 +810,15 @@ function draw() {
   //entityManager6.update(delta);
   entityManager7.update(delta);
 
+
   renderer.render(scene, camera);
   renderer.setAnimationLoop(draw);
 }
 
 function animate() {
+  
   if (submarineLoaded) {
+    //console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
     submarinePosition = main.simulate(submarinePosition);
     //console.log("submarine position", submarinePosition);
 
@@ -828,7 +829,7 @@ function animate() {
     submarine.position.copy(submarinePosition);
 
     // Debug - Log Updated Position
-    console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
+    //console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
   }
 
   requestAnimationFrame(animate);
@@ -836,7 +837,6 @@ function animate() {
   render();
   controls.update();
 }
-
 
 function render() {
   water.material.uniforms['time'].value += 1.0 / 60.0;
