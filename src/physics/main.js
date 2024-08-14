@@ -18,8 +18,8 @@ const variables = new Variables(
     5, //radius
     2000, //Pe power of engine
     3, //Aw Area of flipper
-    0, //alpha (Horizontal angle)
-    0, //beta (Vertical angle)
+    30, //alpha (Horizontal angle)
+    10, //beta (Vertical angle)
     10, //length
     new THREE.Vector3(),
     0,

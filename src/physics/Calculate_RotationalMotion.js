@@ -67,8 +67,8 @@ velocity_Angular_VelocityRadius() {
   console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
   console.log(this.Velocity_ang);
     const velocity_angular = new vector(0, 0, 0);
-    const accelration = new vector(0, 0, 0);
-    velocity_angular.add( accelration.multiplyBy(this.caculate_Angulare_Acc(), this.t), this.prevVelocity_ang  );
+    const accelration = new vector(1, 1, 1);
+   velocity_angular.add( accelration.multiplyBy(this.anac, this.t), this.prevVelocity_ang  );
     this.variables.Velocity_ang = velocity_angular;
     return velocity_angular;
   }
@@ -81,7 +81,6 @@ velocity_Angular_VelocityRadius() {
   angular1.add( angular2.multiplyBy(this.velocity_Angular_VelocityRadius(), this.t), this.pre_angle);
   this.variables.angle = angular1;
   return angular1;
-  
  }
 
 
