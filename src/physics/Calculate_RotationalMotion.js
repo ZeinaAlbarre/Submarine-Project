@@ -68,7 +68,7 @@ velocity_Angular_VelocityRadius() {
   console.log(this.Velocity_ang);
     const velocity_angular = new THREE.Vector3(0, 0, 0);
     const accelration = new THREE.Vector3(1, 1, 1);
-    velocity_angular.addVectors( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t)), this.prevVelocity_ang  );
+    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t))).addScalar(this.prevVelocity_ang  );
     this.variables.Velocity_ang = velocity_angular;
     return velocity_angular;
   }
