@@ -6,6 +6,7 @@ import Variables from "./Variables";
 import Engine from "./Engine";
 import Weight from './Weight.js';
 import Retrograde from './Retrograde.js';
+import Calculate_RotationalMotion from './Calculate_RotationalMotion.js';
 
 
 
@@ -31,9 +32,17 @@ let thetaV = new THREE.Vector3(0, variables.beta, 0);
 let t = 1;
 
 const retrograde = new Retrograde(variables, coordinate, variables.prevVelocity, 1);
+const calculate_RotationalMotion = new Calculate_RotationalMotion
+(   
+    variables,
+    variables.prevVelocity,
+    variables.Velocity_ang,
+    variables.pre_angle,
+    1
+);
 
 variables.prevVelocity = retrograde.calcVelocity();
-
+variables.Velocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
 
 const liftH = new Lift(
     variables, //variables
@@ -154,6 +163,9 @@ let position = new THREE.Vector3(0, 0, 0);
   function simulate (submarinePosition) {
 
 
+    calculate_RotationalMotion.Velocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
+    variables.Velocity_ang=calculate_RotationalMotion.Velocity_ang;
+    
     retrograde.prevVelocity = retrograde.calcVelocity();
     variables.prevVelocity = retrograde.prevVelocity;
     //console.log(variables.prevVelocity);
