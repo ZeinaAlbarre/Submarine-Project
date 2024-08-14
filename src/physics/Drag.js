@@ -1,27 +1,30 @@
 import * as THREE from 'three';
+
 export default class Drag {
-  Fd;
   constructor(variables, velocity) {
-    this.variable = variables;
+    this.variables = variables;
     this.velocity = this.updateVelocity(velocity);
-    this.Fd = this.calcFd();
+    this.updateFd(); // Initialize drag force
   }
 
   updateVelocity(velocity) {
     return new THREE.Vector3(velocity.x, velocity.y, velocity.z);
   }
 
-  updateFd () {
+  updateFd() {
     this.Fd = this.calcFd();
   }
+
   calcFd() {
-    const velocity = this.velocity.length();
-    if (velocity === 0) {
+    console.log('heeeeere');
+    console.log(this.velocity);
+    const velocityLength = this.velocity.length();
+    if (velocityLength === 0) {
       return new THREE.Vector3(0, 0, 0); // No drag force if velocity is zero
     }
-    const fd =
-      0.5 * this.variable.Cd * this.variable.p * velocity * velocity * this.variable.A;
-      console.log(`Fd: ${-1 * fd * (this.velocity.z / velocity)}`);
-    return new THREE.Vector3(0, 0, (-1) * fd * (this.velocity.z / velocity));
+
+    const fd = 0.5 * this.variables.Cd * this.variables.p * velocityLength * velocityLength * this.variables.A;
+    console.log(`Fd: ${fd}`);
+    return new THREE.Vector3(0, 0, (-1) * fd); // Applying drag force in the opposite direction of movement
   }
 }

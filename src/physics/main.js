@@ -12,14 +12,14 @@ import Retrograde from './Retrograde.js';
 // Variables
 const variables = new Variables(
     0, //Ve Velocity of fan
-    203300, //mass
+    785398, //mass
     0, //water mass
-    4, //radius
-    500, //Pe power of engine
-    6, //Aw Area of flipper
+    5, //radius
+    2000, //Pe power of engine
+    3, //Aw Area of flipper
     0, //alpha (Horizontal angle)
     0, //beta (Vertical angle)
-    1000, //length
+    10, //length
     new THREE.Vector3(),
     0,
     0
@@ -30,7 +30,7 @@ let thetaH = new THREE.Vector3(0, variables.alpha, variables.alpha);
 let thetaV = new THREE.Vector3(0, variables.beta, 0);
 let t = 1;
 
-const retrograde = new Retrograde(variables, coordinate, variables.prevVelocity, variables.alpha, 1);
+const retrograde = new Retrograde(variables, coordinate, variables.prevVelocity, 1);
 
 variables.prevVelocity = retrograde.calcVelocity();
 
@@ -102,25 +102,25 @@ window.addEventListener(
               console.log('updated BETA', variables.beta);
               break;
 
-              case "W" || "w": // W
+              case "W" : case "w": // W
               variables.Ve += 10;
                   engine.updateFe();
                   console.log("updated VE", engine.variable.Ve);
                   break;
-              case "S" || "s": // W
+              case "S" : case "s": // W
                   if (variables.Ve - 10 >= 0) {
                       variables.Ve -= 10;
                   }
                   engine.updateFe();
                   console.log("updated VE", engine.variable.Ve);
                   break;
-          case "A" || "a": // A
+          case "A" : case "a": // A
               variables.wm += 1000;
               weight.updateFw();
               console.log("updated weight", weight.Fw);
               console.log("updated M", variables.wm + variables.m);
               break;
-          case "D" || "d": // A
+          case "D" : case "d": // A
           if(variables.wm - 1000 >= 0){
               variables.wm -= 1000;
             weight.updateFw();
@@ -156,7 +156,7 @@ let position = new THREE.Vector3(0, 0, 0);
 
     retrograde.prevVelocity = retrograde.calcVelocity();
     variables.prevVelocity = retrograde.prevVelocity;
-    console.log(variables.prevVelocity);
+    //console.log(variables.prevVelocity);
     //console.log(liftH, liftV);
     // Recalculate the forces based on the updated velocity
     //drag.velocity = retrograde.prevVelocity; // Update drag with the new velocity
@@ -169,13 +169,15 @@ let position = new THREE.Vector3(0, 0, 0);
     const weightForce = weight.Fw.multiplyScalar(0.000001);
     const buoyancyForce = buoyancy.Fb.multiplyScalar(0.000001);
     const engineForce = engine.Fe.normalize();
-    
+
     /* liftH.updateForces();
     liftV.updateForces(); */
     drag.updateFd();
     engine.updateFe();
     weight.updateFw();
-    //buoyancy.updateFb();
+    buoyancy.updateFb();
+    console.log(liftH.forceVector);
+    //retrograde.updateTotalForce();
     position.setX(submarinePosition.x + (+1)*engineForce.x + weightForce.x + buoyancyForce.x + dragForce.x + liftHForce.x + liftVForce.x);
     position.setY(submarinePosition.y + (+1)*engineForce.y + weightForce.y + buoyancyForce.y + dragForce.y + liftHForce.y + liftVForce.y);
     position.setZ(submarinePosition.z + (-1)*engineForce.z + weightForce.z + buoyancyForce.z + dragForce.z + liftHForce.z + liftVForce.z);

@@ -9,7 +9,8 @@ export default class Retrograde {
   drag;
   engine;
   weight;
-  lift;
+  liftH;
+  liftV;
   prevCoordinates;
   prevVelocity;
   t;
@@ -19,29 +20,47 @@ export default class Retrograde {
     variables,
     prevCoordinates,
     prevVelocity,
-    theta,
     t
   ) {
     this.variables = variables;
     this.buoyancy = new Buoyancy(variables);
-    this.drag = new Drag(variables, prevVelocity);
+    this.drag = new Drag(variables, variables.prevVelocity);
     this.engine = new Engine(variables);
     this.weight = new Weight(variables);
-    this.lift = new Lift(variables, prevVelocity, theta);
+    this.liftH = new Lift(variables, prevVelocity, new THREE.Vector3(0, variables.alpha, variables.alpha));
+    this.liftV = new Lift(variables, prevVelocity, new THREE.Vector3(0, variables.beta, 0));
     this.prevCoordinates = prevCoordinates;
     this.prevVelocity = prevVelocity;
     this.t = t;
     this.m = variables.m;
     this.RetrogradeForce = this.calcCoordinates();
   }
+  
   totalForce() {
+    //console.log(this.drag.calcFd());
+    /* const liftHForce = liftH.forceVector.normalize();
+    const liftVForce = liftV.forceVector.normalize();
+    const dragForce = drag.Fd.normalize();
+    const weightForce = weight.Fw.multiplyScalar(0.000001);
+    const buoyancyForce = buoyancy.Fb.multiplyScalar(0.000001);
+    const engineForce = engine.Fe.normalize();
+     */
+
+    console.log(this.buoyancy.Fb);
+    console.log(this.drag.Fd);
+    console.log(this.engine.Fe);
+    console.log(this.weight.Fw);
+    console.log(this.liftH.forceVector);
+    console.log(this.liftV.forceVector);
+    
     const totalForce = new THREE.Vector3();
     return totalForce
         .add(this.buoyancy.Fb)
         .add(this.drag.Fd)
         .add(this.engine.Fe)
         .add(this.weight.Fw)
-        .add(this.lift.forceVector);
+        .add(this.liftH.forceVector)
+        .add(this.liftV.forceVector);
 }
 
 calcAcceleration() {
