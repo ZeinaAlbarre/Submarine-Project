@@ -11,6 +11,8 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
+    "chart": "^0.1.2",
+    "chartjs": "^0.3.24",
     "dat.gui": "^0.7.9",
     "three": "^0.148.0",
     "yuka": "^0.7.8"

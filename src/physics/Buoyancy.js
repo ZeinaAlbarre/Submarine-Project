@@ -6,6 +6,9 @@ export default class Buoyancy {
     this.Fb = this.calcFb();
   }
 
+  updateFb() {
+    this.Fb = this.calcFb();
+  }
   calcFb() { console.log(`Fb: ${this.variable.g * this.variable.p * this.variable.V}`);
     return new THREE.Vector3(
       0,

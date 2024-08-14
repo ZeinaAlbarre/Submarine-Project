@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 export default class Variables{
-    constructor(Ve , m , r, Pe, Aw , alpha , beta, l, prevVelocity, Velocity_ang ,angle){
+    constructor(Ve , m , wm, r, Pe, Aw , alpha , beta, l, prevVelocity, Velocity_ang ,angle){
         this.Ve = Ve;
         this.m = m;
         this.wm = wm;

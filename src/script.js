@@ -17,7 +17,7 @@ let controls, water, sun, clock;
 const mixers = [];
 let mixer,mixer1,mixer2,mixer4,mixer5,mixer6,mixer7,mixer8;
 let submarine; 
-let submarinePosition = new THREE.Vector3(100, -50, 8500);
+let submarinePosition = new THREE.Vector3(100, -550, 8500);
 let submarineLoaded = false;
 const entityManager1 = new YUKA.EntityManager();
 const entityManager = new YUKA.EntityManager();

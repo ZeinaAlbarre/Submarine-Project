@@ -11,6 +11,9 @@ export default class Drag {
     return new THREE.Vector3(velocity.x, velocity.y, velocity.z);
   }
 
+  updateFd () {
+    this.Fd = this.calcFd();
+  }
   calcFd() {
     const velocity = this.velocity.length();
     if (velocity === 0) {
