@@ -66,9 +66,9 @@ export default class Calculate_RotationalMotion{
 velocity_Angular_VelocityRadius() {
   console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
   console.log(this.Velocity_ang);
-    const velocity_angular = new THREE.Vector3(0, 0, 0);
-    const accelration = new THREE.Vector3(0, 0, 0);
-    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t)).addScalar(this.prevVelocity_ang) );
+    const velocity_angular = new vector(0, 0, 0);
+    const accelration = new vector(1, 1, 1);
+   velocity_angular.add( accelration.multiplyBy(this.anac, this.t), this.prevVelocity_ang  );
     this.variables.Velocity_ang = velocity_angular;
     return velocity_angular;
   }
