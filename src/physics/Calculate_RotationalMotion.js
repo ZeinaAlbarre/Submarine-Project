@@ -44,43 +44,44 @@ export default class Calculate_RotationalMotion{
   }
  
 
-  calculate_add()
-  {
+  calculate_add() {
     const v1 = new THREE.Vector3(0, 0, 0);
-    v1.addVectors(this.liftH,this.liftV);
+    v1.addVectors(this.liftH.forceVector, this.liftV.forceVector);
     return v1;
-  }
+}
+
   
   // ac = l*fl / i delta
-  caculate_Angulare_Acc(){
-    console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
-    console.log(this.anac);
-    
+  caculate_Angulare_Acc() {
+      console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
+      console.log(this.anac);      
     const anac_v1 = new THREE.Vector3(0, 0, 0);
     const anac_v2 = new THREE.Vector3(0, 0, 0);
-      return anac_v2.copy((anac_v1.copy(this.calculate_add().multiplyScalar(this.variables.l))).divideScalar(this.variables.IDelta));
-  }
+    return anac_v2.copy(anac_v1.copy(this.calculate_add().multiplyScalar(this.variables.l)).divideScalar(this.variables.IDelta));
+}
+
 
  
 //w = w(t-1) + (ac * t)
 velocity_Angular_VelocityRadius() {
   console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
   console.log(this.Velocity_ang);
-    const velocity_angular = new THREE.Vector3(0, 0, 0);
     const accelration = new THREE.Vector3(1, 1, 1);
-    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t))).addScalar(this.prevVelocity_ang  );
-    this.variables.Velocity_ang = velocity_angular;
-    return velocity_angular;
-  }
+  const velocity_angular = new THREE.Vector3(0, 0, 0);
+  velocity_angular.add(this.caculate_Angulare_Acc().multiplyScalar(this.t)).add(new THREE.Vector3(this.prevVelocity_ang, this.prevVelocity_ang, this.prevVelocity_ang)); // Assuming uniform angular velocity in all directions
+  this.variables.Velocity_ang = velocity_angular;
+  return velocity_angular;
+}
+
  //0 = 0(t-1) + (wt *t)
- calculate_prespective_angle(){
-  console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
-  console.log(this.variables.angle);
-  const angular1= new THREE.Vector3(0, 0, 0);
-  const  angular2= new THREE.Vector3(0, 0, 0);
-  angular1.add( angular2.copy((this.velocity_Angular_VelocityRadius()).multiplyScalar(this.t)).addScalar(this.pre_angle));
+ calculate_prespective_angle() {
+    console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
+    console.log(this.variables.angle);
+    const  angular2= new THREE.Vector3(0, 0, 0);
+  const angular1 = new THREE.Vector3(0, 0, 0);
+  angular1.add(this.velocity_Angular_VelocityRadius().multiplyScalar(this.t)).add(this.pre_angle); // Assuming pre_angle is a vector
   this.variables.angle = angular1;
   return angular1;
- }
+}
 
 }

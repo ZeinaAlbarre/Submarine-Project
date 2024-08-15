@@ -128,9 +128,12 @@ controls.update();
   window.addEventListener('resize', onWindowResize);
 
   // Debug UI
-  const gui = new dat.GUI();
+ const gui = new dat.GUI();
   gui.add(parameters, 'elevation', -90, 180).onChange(updateSun);
   gui.add(parameters, 'azimuth', -180, 180).onChange(updateSun);
+  
+  gui.add(waterUniforms.distortionScale, "value", 0, 8, 0.1).name("distortionScale");
+  gui.add(waterUniforms.size, "value", 0.1, 10, 0.1).name("size");
 
   const loader = new GLTFLoader();
 
@@ -150,7 +153,7 @@ loader.load('model/submarine.glb', function (glb) {
 
   submarine.add(camera);
   camera.position.set(-9, 90, 300); 
-
+/* 
   const submarineFolder = gui.addFolder('Submarine Position');
   submarineFolder.add(submarine.position, 'x', -1000, 1000).name('Move X');
   submarineFolder.add(submarine.position, 'y', -1000, 1000).name('Move Y');
@@ -160,13 +163,13 @@ loader.load('model/submarine.glb', function (glb) {
   submarineFolder.add(submarine.rotation, 'x', 0, Math.PI * 2).name('Rotate X');
   submarineFolder.add(submarine.rotation, 'y', 0, Math.PI * 2).name('Rotate Y');
   submarineFolder.add(submarine.rotation, 'z', 0, Math.PI * 2).name('Rotate Z');
-  submarineFolder.open();
+  submarineFolder.open(); */
   submarineLoaded = true;
 });
 
 
   const mtlLoader = new MTLLoader();
- /* mtlLoader.load('model/island3.mtl', function (materials) {
+ mtlLoader.load('model/island3.mtl', function (materials) {
     materials.preload();
 
     const objLoader = new OBJLoader();
@@ -201,7 +204,7 @@ loader.load('model/submarine.glb', function (glb) {
       obj.scale.set(10, 10, 10);
     });
   });
-*/
+
   loader.load('model/birds.glb', function (glb) {
     const model = glb.scene;
     scene.add(model);
@@ -820,6 +823,8 @@ function animate() {
   if (submarineLoaded) {
     //console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
     submarinePosition = main.simulate(submarinePosition);
+
+    //main.chartSimulate();
     //console.log("submarine position", submarinePosition);
 
     //newPosition = newPosition.multiplyScalar(0.0000000001);
