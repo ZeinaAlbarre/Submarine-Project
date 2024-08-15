@@ -151,6 +151,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarine.add(camera);
   camera.position.set(-9, 90, 300); 
 
+
   const submarineFolder = gui.addFolder('Submarine Position');
   submarineFolder.add(submarine.position, 'x', -1000, 1000).name('Move X');
   submarineFolder.add(submarine.position, 'y', -1000, 1000).name('Move Y');
@@ -659,9 +660,10 @@ loader.load('model/fish/turtle.glb', function(glb) {
   const geometry = new THREE.SphereGeometry( 0.2, 32, 16 ); 
   const material = new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load('textures/hh.jpg'),side:THREE.DoubleSide});
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.set(0,-5200,0);
-  mesh.scale.set(10000,10000,10000);
+  mesh.position.set(0,-6200,0);
+  mesh.scale.set(31000,31000,31000);
   scene.add( mesh );
+
 
 
   
@@ -821,6 +823,8 @@ function animate() {
     //console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
     submarinePosition = main.simulate(submarinePosition);
     //console.log("submarine position", submarinePosition);
+
+    
 
     //newPosition = newPosition.multiplyScalar(0.0000000001);
     //console.log("new pos", newPosition);
