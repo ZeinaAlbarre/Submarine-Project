@@ -153,7 +153,7 @@ loader.load('model/submarine.glb', function (glb) {
 
   submarine.add(camera);
   camera.position.set(-9, 90, 300); 
-
+/* 
   const submarineFolder = gui.addFolder('Submarine Position');
   submarineFolder.add(submarine.position, 'x', -1000, 1000).name('Move X');
   submarineFolder.add(submarine.position, 'y', -1000, 1000).name('Move Y');
@@ -163,7 +163,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarineFolder.add(submarine.rotation, 'x', 0, Math.PI * 2).name('Rotate X');
   submarineFolder.add(submarine.rotation, 'y', 0, Math.PI * 2).name('Rotate Y');
   submarineFolder.add(submarine.rotation, 'z', 0, Math.PI * 2).name('Rotate Z');
-  submarineFolder.open(); */
+  submarineFolder.open(); */ 
   submarineLoaded = true;
 });
 
