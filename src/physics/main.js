@@ -46,6 +46,7 @@ const calculate_RotationalMotion = new Calculate_RotationalMotion
         1
     );
 
+
 variables.prevVelocity = retrograde.calcVelocity();
 variables.Velocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
 

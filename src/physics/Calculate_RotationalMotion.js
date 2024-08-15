@@ -66,13 +66,12 @@ export default class Calculate_RotationalMotion{
 velocity_Angular_VelocityRadius() {
   console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
   console.log(this.Velocity_ang);
+    const velocity_angular = new THREE.Vector3(0, 0, 0);
     const accelration = new THREE.Vector3(1, 1, 1);
-  const velocity_angular = new THREE.Vector3(0, 0, 0);
-  velocity_angular.add(this.caculate_Angulare_Acc().multiplyScalar(this.t)).add(new THREE.Vector3(this.prevVelocity_ang, this.prevVelocity_ang, this.prevVelocity_ang)); // Assuming uniform angular velocity in all directions
-  this.variables.Velocity_ang = velocity_angular;
-  return velocity_angular;
-}
-
+    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t))).addScalar(this.prevVelocity_ang  );
+    this.variables.Velocity_ang = velocity_angular;
+    return velocity_angular;
+  }
  //0 = 0(t-1) + (wt *t)
  calculate_prespective_angle() {
     console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
@@ -82,6 +81,6 @@ velocity_Angular_VelocityRadius() {
   angular1.add(this.velocity_Angular_VelocityRadius().multiplyScalar(this.t)).add(this.pre_angle); // Assuming pre_angle is a vector
   this.variables.angle = angular1;
   return angular1;
-}
+ }
 
 }
