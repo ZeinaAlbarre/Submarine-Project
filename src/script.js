@@ -167,7 +167,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarineLoaded = true;
 });
 
-
+/*
   const mtlLoader = new MTLLoader();
  mtlLoader.load('model/island3.mtl', function (materials) {
     materials.preload();
@@ -204,7 +204,7 @@ loader.load('model/submarine.glb', function (glb) {
       obj.scale.set(10, 10, 10);
     });
   });
-
+*/
   loader.load('model/birds.glb', function (glb) {
     const model = glb.scene;
     scene.add(model);

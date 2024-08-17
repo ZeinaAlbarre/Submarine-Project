@@ -13,63 +13,73 @@ export default class Calculate_RotationalMotion{
   anac;
   prevVelocity;
   t;
-  Velocity_ang;
-  prevVelocity_ang;
-  pre_angle;
+  preVelocity_ang;
+  preangle;
 
   constructor(
     variables,
     prevVelocity,
-    prevVelocity_ang,
-    pre_angle,
+    preVelocity_ang,
+    preangle,
     t
   ) 
   {
     this.variables = variables;
     this.buoyancy = new Buoyancy(variables);
-
     this.liftH = new Lift(variables, prevVelocity, new THREE.Vector3(0, variables.alpha, variables.alpha));
     this.liftV = new Lift(variables, prevVelocity, new THREE.Vector3(0, variables.beta, 0));
-    
-
     this.engine = new Engine(variables);
     this.weight = new Weight(variables);
     this.anac = this.caculate_Angulare_Acc();
     this.prevVelocity=prevVelocity;
     this.t= t;
-    this.Velocity_ang = this.velocity_Angular_VelocityRadius();
-    this.prevVelocity_ang = prevVelocity_ang;
-    this.pre_angle = pre_angle;
-
+    //this.preVelocity_ang= this.velocity_Angular_VelocityRadius();
+    this.preVelocity_ang = preVelocity_ang;
+    this.preangle = preangle;
+   
   }
  
 
-  calculate_add() {
-    const v1 = new THREE.Vector3(0, 0, 0);
-    v1.addVectors(this.liftH.forceVector, this.liftV.forceVector);
-    return v1;
+  
+  calculate_add() {   
+    const v1 = new THREE.Vector3();
+    return v1
+        .add(this.liftH.forceVector)
+        .add(this.liftV.forceVector);
+
 }
 
   
   // ac = l*fl / i delta
   caculate_Angulare_Acc() {
-      console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
-      console.log(this.anac);      
-    const anac_v1 = new THREE.Vector3(0, 0, 0);
-    const anac_v2 = new THREE.Vector3(0, 0, 0);
-    return anac_v2.copy(anac_v1.copy(this.calculate_add().multiplyScalar(this.variables.l)).divideScalar(this.variables.IDelta));
+    console.log('Calculating Angular Acceleration:');
+    
+    const forceSum = this.calculate_add();
+    console.log('Force Sum:', forceSum);
+
+    // Ensure l and IDelta are not zero
+    if (this.variables.l === 0 || this.variables.IDelta === 0) {
+        console.error('Error: l or IDelta is zero, cannot calculate angular acceleration.');
+        return new THREE.Vector3(0, 0, 0);
+    }
+
+    const angularAcc = new THREE.Vector3(0, 0, 0);
+    angularAcc.copy(forceSum.multiplyScalar(this.variables.l).divideScalar(this.variables.IDelta));
+    
+    console.log('Calculated Angular Acceleration:', angularAcc);
+    return angularAcc;
 }
 
 
  
 //w = w(t-1) + (ac * t)
 velocity_Angular_VelocityRadius() {
-  console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
-  console.log(this.Velocity_ang);
+  //console.log('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer');
+ // console.log(this.Velocity_ang);
     const velocity_angular = new THREE.Vector3(0, 0, 0);
     const accelration = new THREE.Vector3(1, 1, 1);
-    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t))).addScalar(this.prevVelocity_ang  );
-    this.variables.Velocity_ang = velocity_angular;
+    velocity_angular.add( accelration.copy((this.caculate_Angulare_Acc()).multiplyScalar(this.t))).addScalar(this.preVelocity_ang);
+    this.variables.preVelocity_ang = velocity_angular;
     return velocity_angular;
   }
  //0 = 0(t-1) + (wt *t)
@@ -78,7 +88,7 @@ velocity_Angular_VelocityRadius() {
     console.log(this.variables.angle);
     const  angular2= new THREE.Vector3(0, 0, 0);
   const angular1 = new THREE.Vector3(0, 0, 0);
-  angular1.add(this.velocity_Angular_VelocityRadius().multiplyScalar(this.t)).add(this.pre_angle); // Assuming pre_angle is a vector
+  angular1.add(this.velocity_Angular_VelocityRadius().multiplyScalar(this.t)).add(this.preangle); // Assuming pre_angle is a vector
   this.variables.angle = angular1;
   return angular1;
  }

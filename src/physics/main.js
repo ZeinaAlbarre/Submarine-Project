@@ -23,8 +23,8 @@ const variables = new Variables(
     5, //radius
     2000, //Pe power of engine
     3, //Aw Area of flipper
-    30, //alpha (Horizontal angle)
-    10, //beta (Vertical angle)
+    5, //alpha (Horizontal angle)
+    3, //beta (Vertical angle)
     10, //length
     new THREE.Vector3(),
     0,
@@ -41,14 +41,14 @@ const calculate_RotationalMotion = new Calculate_RotationalMotion
     (
         variables,
         variables.prevVelocity,
-        variables.Velocity_ang,
-        variables.pre_angle,
+        variables.preVelocity_ang,
+        variables.preangle,
         1
     );
 
 
 variables.prevVelocity = retrograde.calcVelocity();
-variables.Velocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
+variables.preVelocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
 
 const liftH = new Lift(
     variables, //variables
@@ -168,7 +168,7 @@ function simulate(submarinePosition) {
 
 
     calculate_RotationalMotion.Velocity_ang = calculate_RotationalMotion.velocity_Angular_VelocityRadius();
-    variables.Velocity_ang = calculate_RotationalMotion.Velocity_ang;
+    variables.preVelocity_ang = calculate_RotationalMotion.Velocity_ang;
 
     retrograde.prevVelocity = retrograde.calcVelocity();
     variables.prevVelocity = retrograde.prevVelocity;
