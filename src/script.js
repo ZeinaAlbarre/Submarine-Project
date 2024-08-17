@@ -241,7 +241,7 @@ loader.load('model/submarine.glb', function (glb) {
       const cohesionBehavior = new YUKA.CohesionBehavior();
       cohesionBehavior.weight = 2;
       const createFishPath = (startPosition) => {
-        const targetPosition = new YUKA.Vector3(vehicle.position.x + 500, vehicle.position.y + 100, vehicle.position.z ); 
+        const targetPosition = new YUKA.Vector3(vehicle.position.x + 500, vehicle.position.y, vehicle.position.z ); 
         const path = new YUKA.Path();
         path.add(startPosition);        
         path.add(targetPosition);       
@@ -261,9 +261,9 @@ loader.load('model/submarine.glb', function (glb) {
         vehicle.scale.set(1, 1, 1);
     
         const startPosition = new YUKA.Vector3(
-          -1000 + Math.random() * 1000 - 500,
+          -1000 + Math.random() * 1200 - 600,
           -5200, 
-          2000 + Math.random() * 1000 - 500
+          2000 + Math.random() * 1200 - 600
 
         );
     
@@ -317,14 +317,9 @@ loader.load('model/submarine.glb', function (glb) {
   vehicle1.setRenderComponent(vehicleMesh, sync);
 
   const path = new YUKA.Path();
-  path.add( new YUKA.Vector3(500, -5500, 3500));
-  path.add( new YUKA.Vector3(2000, -5200, 0));
-  path.add( new YUKA.Vector3(2000, -5200, -3500));
-  path.add( new YUKA.Vector3(0, -5200, 0));
-  path.add( new YUKA.Vector3(-1000, -5200, -3500));
-  path.add( new YUKA.Vector3(2000, -5200, 3000));
-  path.add( new YUKA.Vector3(-2000, -5200, 3000));
-  path.add( new YUKA.Vector3(0, -5200, 3000));
+  path.add( new YUKA.Vector3(1000, -5500, 3000));
+  path.add( new YUKA.Vector3(400, -5500, 3400));
+  
 
   path.loop = true;
 
