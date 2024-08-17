@@ -204,7 +204,7 @@ loader.load('model/submarine.glb', function (glb) {
       obj.scale.set(10, 10, 10);
     });
   });
-*/
+
   loader.load('model/birds.glb', function (glb) {
     const model = glb.scene;
     scene.add(model);
@@ -219,7 +219,7 @@ loader.load('model/submarine.glb', function (glb) {
       mixers.push(mixer);
     }
   });
-
+*/
   
   function sync(entity, renderComponent) {
     renderComponent.matrix.copy(entity.worldMatrix);
@@ -258,12 +258,12 @@ loader.load('model/submarine.glb', function (glb) {
     
         const vehicle = new YUKA.Vehicle();
         vehicle.setRenderComponent(fishClone, sync);
-        vehicle.scale.set(0.4, 0.4, 0.4);
+        vehicle.scale.set(1.5, 1.5, 1.5);
     
         const startPosition = new YUKA.Vector3(
-          -150 + Math.random() * 400 - 200,
+          -2500 + Math.random() * 1000 - 500,
           -5200, 
-          2.5 + Math.random() * 400 - 200
+          2000 + Math.random() * 1000 - 500
 
         );
     
@@ -294,7 +294,7 @@ loader.load('model/submarine.glb', function (glb) {
   loader.load('model/shark/swimming_shark__animated.glb',function(glb){
     const model=glb.scene;
     scene.add(model);
-    model.position.set(0,-6000,0);
+    model.position.set(0,-6000,-3000);
     model.scale.set(50,50,50)
     mixer1=new THREE.AnimationMixer(model);
     const clips=glb.animations;
@@ -317,13 +317,13 @@ loader.load('model/submarine.glb', function (glb) {
   vehicle1.setRenderComponent(vehicleMesh, sync);
 
   const path = new YUKA.Path();
-  path.add( new YUKA.Vector3(-500, -5200, 500));
-  path.add( new YUKA.Vector3(-1000, -5200, 0));
-  path.add( new YUKA.Vector3(-500, -5200, -500));
+  path.add( new YUKA.Vector3(2000, -5200, 500));
+  path.add( new YUKA.Vector3(3000, -5200, 0));
+  path.add( new YUKA.Vector3(1100, -5200, -500));
   path.add( new YUKA.Vector3(0, -5200, 0));
-  path.add( new YUKA.Vector3(500, -5200, -500));
-  path.add( new YUKA.Vector3(1000, -5200, 1000));
-  path.add( new YUKA.Vector3(1000, -5200, 1000));
+  path.add( new YUKA.Vector3(-1100, -5200, -500));
+  path.add( new YUKA.Vector3(2000, -5200, 1000));
+  path.add( new YUKA.Vector3(-2000, -5200, 1000));
   path.add( new YUKA.Vector3(0, -5200, 500));
 
   path.loop = true;
@@ -361,69 +361,69 @@ loader.load('model/submarine.glb', function (glb) {
   
 loader.load('model/fish/largemouth_bass.glb', function(glb) {
   const model = glb.scene;
-      const fishes = new THREE.AnimationObjectGroup();
-      mixer8 = new THREE.AnimationMixer(fishes);
-      const clips=glb.animations;
+  const fishes = new THREE.AnimationObjectGroup();
+  mixer8 = new THREE.AnimationMixer(fishes);
+  const clips=glb.animations;
 
-    clips.forEach(function(clip){
-      const action=mixer8.clipAction(clip);
-      action.play();
-    });
-    
-      const alifnmentBehabior = new YUKA.AlignmentBehavior();
-      alifnmentBehabior.weight = 2;
-    
-      const cohesionBehavior = new YUKA.CohesionBehavior();
-      cohesionBehavior.weight = 2;
-      const createFishPath = (startPosition) => {
-        const targetPosition = new YUKA.Vector3(vehicle.position.x  , vehicle.position.y, vehicle.position.z + 200); 
-        const path = new YUKA.Path();
-        path.add(startPosition);        
-        path.add(targetPosition);       
-        path.add(startPosition);        
-        path.loop = true;             
-        return path;
-      };
-    
-      for (let i = 0; i < 30; i++) {
-        const fishClone = SkeletonUtils.clone(model);
-        fishClone.matrixAutoUpdate = false;
-        scene.add(fishClone);
-        fishes.add(fishClone);
-    
-        const vehicle = new YUKA.Vehicle();
-        vehicle.setRenderComponent(fishClone, sync);
-        vehicle.scale.set(40, 40, 40);
-    
-        const startPosition = new YUKA.Vector3(
-          700 + Math.random() * 500 - 250,
-          -6000, 
-          2.5 + Math.random() * 500 - 250
+clips.forEach(function(clip){
+  const action=mixer8.clipAction(clip);
+  action.play();
+});
 
-        );
-    
-        const fishPath = createFishPath(startPosition);
-    
-        const followPathBehavior = new YUKA.FollowPathBehavior(fishPath, 2); 
-        vehicle.steering.add(followPathBehavior);
-    
-    
-        const wanderBehavior = new YUKA.WanderBehavior();
-        vehicle.steering.add(wanderBehavior);
-        wanderBehavior.weight = 0.1;
-    
-        vehicle.updateNeighborhood = true;
-        vehicle.neighborhoodRadius = 10;
-    
-        vehicle.steering.add(alifnmentBehabior);
-        // vehicle.steering.add(cohesionBehavior);
-        // vehicle.steering.add(separationBehavior);
-    
-        entityManager7.add(vehicle);
-    
-        vehicle.position.copy(startPosition);
-        vehicle.rotation.fromEuler(0, 2 * Math.PI * Math.random(), 0);
-      }
+  const alifnmentBehabior = new YUKA.AlignmentBehavior();
+  alifnmentBehabior.weight = 0.1;
+
+  const cohesionBehavior = new YUKA.CohesionBehavior();
+  cohesionBehavior.weight = 0.1;
+  const createFishPath = (startPosition) => {
+    const targetPosition = new YUKA.Vector3(vehicle.position.x + 100000 , vehicle.position.y, vehicle.position.z ); 
+    const path = new YUKA.Path();
+    path.add(startPosition);        
+    path.add(targetPosition);       
+    path.add(startPosition);        
+    path.loop = true;             
+    return path;
+  };
+
+  for (let i = 0; i < 30; i++) {
+    const fishClone = SkeletonUtils.clone(model);
+    fishClone.matrixAutoUpdate = false;
+    scene.add(fishClone);
+    fishes.add(fishClone);
+
+    const vehicle = new YUKA.Vehicle();
+    vehicle.setRenderComponent(fishClone, sync);
+    vehicle.scale.set(100, 100, 100);
+
+    const startPosition = new YUKA.Vector3(
+      700 + Math.random() * 600 - 300,
+      -6000, 
+      2.5 + Math.random() * 600 - 300
+
+    );
+
+    const fishPath = createFishPath(startPosition);
+
+    const followPathBehavior = new YUKA.FollowPathBehavior(fishPath, 2); 
+    vehicle.steering.add(followPathBehavior);
+
+
+    const wanderBehavior = new YUKA.WanderBehavior();
+    vehicle.steering.add(wanderBehavior);
+    wanderBehavior.weight = 0.1;
+
+    vehicle.updateNeighborhood = true;
+    vehicle.neighborhoodRadius = 10;
+
+    vehicle.steering.add(alifnmentBehabior);
+    // vehicle.steering.add(cohesionBehavior);
+    // vehicle.steering.add(separationBehavior);
+
+    entityManager7.add(vehicle);
+
+    vehicle.position.copy(startPosition);
+    vehicle.rotation.fromEuler(0, 2 * Math.PI * Math.random(), 0);
+  }
 });
   
 
@@ -658,21 +658,18 @@ loader.load('model/fish/turtle.glb', function(glb) {
   
   requestAnimationFrame(update);
   
-  
   const geometry = new THREE.SphereGeometry( 0.2, 32, 16 ); 
   const material = new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load('textures/hh.jpg'),side:THREE.DoubleSide});
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.set(0,-6200,0);
-  mesh.scale.set(31000,31000,31000);
+  mesh.position.set(0,-5200,0);
+  mesh.scale.set(25000,25000,25000);
   scene.add( mesh );
-
 
 
   
 
   clock = new THREE.Clock();
 }
-
 
 
 function onWindowResize() {
@@ -747,13 +744,15 @@ function onKeyUp(event) {
   }
 }0
 function moveToSphere() {
+  
   isUnder=true;
   submarinePosition = new THREE.Vector3(0, -5500, -1100);
   submarine.position.copy(submarinePosition);
   //submarine.position.set(0, -5200, 1100);
-  camera.position.set(-5, 100, 350); 
+  camera.position.set(-5, 100, -350); 
   controls.target.set(0, -5200, 0); 
   controls.update();
+
 }
 
 
@@ -820,7 +819,6 @@ function draw() {
 }
 
 function animate() {
-  
   if (submarineLoaded) {
     //console.log(`Updated Submarine Position: x=${submarine.position.x}, y=${submarine.position.y}, z=${submarine.position.z}`);
     submarinePosition = main.simulate(submarinePosition);
