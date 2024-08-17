@@ -166,7 +166,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarineFolder.open(); */ 
   submarineLoaded = true;
 });
-
+/*
 
   const mtlLoader = new MTLLoader();
  mtlLoader.load('model/island3.mtl', function (materials) {
@@ -219,7 +219,7 @@ loader.load('model/submarine.glb', function (glb) {
       mixers.push(mixer);
     }
   });
-
+*/
   
   function sync(entity, renderComponent) {
     renderComponent.matrix.copy(entity.worldMatrix);
@@ -241,7 +241,7 @@ loader.load('model/submarine.glb', function (glb) {
       const cohesionBehavior = new YUKA.CohesionBehavior();
       cohesionBehavior.weight = 2;
       const createFishPath = (startPosition) => {
-        const targetPosition = new YUKA.Vector3(vehicle.position.x+200, vehicle.position.y, vehicle.position.z ); 
+        const targetPosition = new YUKA.Vector3(vehicle.position.x + 500, vehicle.position.y + 100, vehicle.position.z ); 
         const path = new YUKA.Path();
         path.add(startPosition);        
         path.add(targetPosition);       
@@ -258,10 +258,10 @@ loader.load('model/submarine.glb', function (glb) {
     
         const vehicle = new YUKA.Vehicle();
         vehicle.setRenderComponent(fishClone, sync);
-        vehicle.scale.set(1.5, 1.5, 1.5);
+        vehicle.scale.set(1, 1, 1);
     
         const startPosition = new YUKA.Vector3(
-          -2500 + Math.random() * 1000 - 500,
+          -1000 + Math.random() * 1000 - 500,
           -5200, 
           2000 + Math.random() * 1000 - 500
 
@@ -317,20 +317,20 @@ loader.load('model/submarine.glb', function (glb) {
   vehicle1.setRenderComponent(vehicleMesh, sync);
 
   const path = new YUKA.Path();
-  path.add( new YUKA.Vector3(2000, -5200, 500));
-  path.add( new YUKA.Vector3(3000, -5200, 0));
-  path.add( new YUKA.Vector3(1100, -5200, -500));
+  path.add( new YUKA.Vector3(500, -5500, 3500));
+  path.add( new YUKA.Vector3(2000, -5200, 0));
+  path.add( new YUKA.Vector3(2000, -5200, -3500));
   path.add( new YUKA.Vector3(0, -5200, 0));
-  path.add( new YUKA.Vector3(-1100, -5200, -500));
-  path.add( new YUKA.Vector3(2000, -5200, 1000));
-  path.add( new YUKA.Vector3(-2000, -5200, 1000));
-  path.add( new YUKA.Vector3(0, -5200, 500));
+  path.add( new YUKA.Vector3(-1000, -5200, -3500));
+  path.add( new YUKA.Vector3(2000, -5200, 3000));
+  path.add( new YUKA.Vector3(-2000, -5200, 3000));
+  path.add( new YUKA.Vector3(0, -5200, 3000));
 
   path.loop = true;
 
   vehicle1.position.copy(path.current());
 
-  vehicle1.maxSpeed = 15;
+  vehicle1.maxSpeed = 30;
 
   const followPathBehavior = new YUKA.FollowPathBehavior(path, 0.5);
   vehicle1.steering.add(followPathBehavior);
@@ -352,7 +352,7 @@ loader.load('model/submarine.glb', function (glb) {
       action.play();
     });
     model.matrixAutoUpdate=false;
-    vehicle1.scale=new YUKA.Vector3(200,200,200);
+    vehicle1.scale=new YUKA.Vector3(130,130,130);
    // vehicle1.position=new YUKA.Vector3(10,10.2);
     vehicle1.setRenderComponent(model,sync);
   
@@ -376,7 +376,7 @@ clips.forEach(function(clip){
   const cohesionBehavior = new YUKA.CohesionBehavior();
   cohesionBehavior.weight = 0.1;
   const createFishPath = (startPosition) => {
-    const targetPosition = new YUKA.Vector3(vehicle.position.x + 100000 , vehicle.position.y, vehicle.position.z ); 
+    const targetPosition = new YUKA.Vector3(vehicle.position.x + 100 , vehicle.position.y, vehicle.position.z ); 
     const path = new YUKA.Path();
     path.add(startPosition);        
     path.add(targetPosition);       
@@ -396,8 +396,8 @@ clips.forEach(function(clip){
     vehicle.scale.set(100, 100, 100);
 
     const startPosition = new YUKA.Vector3(
-      700 + Math.random() * 600 - 300,
-      -6000, 
+      1500 + Math.random() * 600 - 300,
+      -6500, 
       2.5 + Math.random() * 600 - 300
 
     );
@@ -463,12 +463,12 @@ clips.forEach(function(clip){
     
         const vehicle = new YUKA.Vehicle();
         vehicle.setRenderComponent(fishClone, sync);
-        vehicle.scale.set(7, 7, 7);
+        vehicle.scale.set(10, 10, 10);
     
         const startPosition = new YUKA.Vector3(
-          -1000 + Math.random() * 600 - 300,
+          -1000 + Math.random() * 900 - 450,
           -6000, 
-          2.5 + Math.random() * 600 - 300
+          2.5 + Math.random() * 900 - 450
 
         );
     
@@ -618,8 +618,8 @@ loader.load('model/fish/dolphinn.glb',function(glb){
   vehicle.setRenderComponent(vehicleMesh1, sync);
 
   const path1 = new YUKA.Path();
-  path1.add(new YUKA.Vector3(1500, -5800, -1300));
-  path1.add(new YUKA.Vector3(-1500, -5800, -1300));
+  path1.add(new YUKA.Vector3(3500, -5800, -1300));
+  path1.add(new YUKA.Vector3(-3500, -5800, -1300));
   path1.loop = true; 
 
 
@@ -631,7 +631,7 @@ loader.load('model/fish/dolphinn.glb',function(glb){
   vehicle.steering.add(followPathBehavior1);
 
   const onPathBehavior1 = new YUKA.OnPathBehavior(path1);
-  onPathBehavior1.radius = 2;
+  onPathBehavior1.radius = 10;
   vehicle.steering.add(onPathBehavior1);
 
   entityManager4.add(vehicle);
@@ -746,10 +746,10 @@ function onKeyUp(event) {
 function moveToSphere() {
   
   isUnder=true;
-  submarinePosition = new THREE.Vector3(0, -5500, -1100);
+  submarinePosition = new THREE.Vector3(0, -5500, 4000);
   submarine.position.copy(submarinePosition);
   //submarine.position.set(0, -5200, 1100);
-  camera.position.set(-5, 100, -350); 
+  camera.position.set(-5, 100, 350); 
   controls.target.set(0, -5200, 0); 
   controls.update();
 
