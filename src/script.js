@@ -167,7 +167,7 @@ loader.load('model/submarine.glb', function (glb) {
   submarineLoaded = true;
 });
 
-/*
+
   const mtlLoader = new MTLLoader();
  mtlLoader.load('model/island3.mtl', function (materials) {
     materials.preload();
@@ -219,7 +219,7 @@ loader.load('model/submarine.glb', function (glb) {
       mixers.push(mixer);
     }
   });
-*/
+
   
   function sync(entity, renderComponent) {
     renderComponent.matrix.copy(entity.worldMatrix);
